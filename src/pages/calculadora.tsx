@@ -1,8 +1,13 @@
+import { useState } from "react";
 import SelectTax from "../components/calculator/SelectTax";
+import CurrencyInput from "react-currency-input-field";
+import NumberFormat from "react-number-format";
 
 const Calcutator = () => {
+  const [initialValue, setInitialValue] = useState(0);
+
   return (
-    <div className="w-full max-w-xs">
+    <div className="sm:grid grid-cols-2 gap-4">
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label
@@ -11,17 +16,22 @@ const Calcutator = () => {
           >
             Valor inicial
           </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="number"
-            name="initial-value"
+          <CurrencyInput
             id="initial-value"
+            name="initial-value"
+            placeholder=""
+            prefix="R$ "
+            defaultValue={initialValue}
+            decimalsLimit={2}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onValueChange={value => {
+              setInitialValue(parseFloat(value.replace(",", ".")));
+            }}
           />
         </div>
 
         <div className="mb-4">
           <h2>Repassar taxa para seu cliente?</h2>
-
           <SelectTax />
         </div>
 
@@ -66,7 +76,43 @@ const Calcutator = () => {
         </div>
       </div>
 
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">teste</div>
+      <div className="bg-white flex items-center justify-center shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="flex-row">
+          <h1 className="text-3xl font-normal leading-normal mt-0 mb-2 text-orange-600">
+            Seu cliente paga
+          </h1>
+          <div>
+            <NumberFormat
+              value={initialValue}
+              allowedDecimalSeparators={[".", ","]}
+              displayType={"text"}
+              decimalSeparator={","}
+              thousandSeparator={"."}
+              prefix={"R$ "}
+              decimalScale={2}
+              fixedDecimalScale={true}
+            />
+          </div>
+
+          <h1 className="text-3xl mt-10 font-normal leading-normal mt-0 mb-2 text-orange-600">
+            Você recebe
+          </h1>
+          <div>
+            <NumberFormat
+              value={initialValue}
+              allowedDecimalSeparators={[".", ","]}
+              displayType={"text"}
+              decimalSeparator={","}
+              thousandSeparator={"."}
+              prefix={"R$ "}
+              decimalScale={2}
+              fixedDecimalScale={true}
+            />
+          </div>
+
+          <div className="mt-4">Taxa SumUp: 4,9%</div>
+        </div>
+      </div>
     </div>
   );
 };
