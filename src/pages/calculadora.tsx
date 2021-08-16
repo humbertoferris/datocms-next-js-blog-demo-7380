@@ -1,4 +1,4 @@
-import SelectTax from "../../components/calculator/SelectTax";
+import SelectTax from "../components/calculator/SelectTax";
 
 const Calcutator = () => {
   return (
