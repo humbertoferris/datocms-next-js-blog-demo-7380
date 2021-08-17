@@ -5,7 +5,6 @@ import cn from "classnames";
 import Link from "next/link";
 
 export default function CoverImage({ title, responsiveImage, slug }) {
-  console.log("[img]", responsiveImage);
   const image = (
     <Image
       src={responsiveImage.src}
@@ -23,7 +22,7 @@ export default function CoverImage({ title, responsiveImage, slug }) {
   );
   return (
     <div className="-mx-5 sm:mx-0">
-      {slug ? (
+      {slug != true && slug ? (
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a aria-label={title}>{image}</a>
         </Link>
